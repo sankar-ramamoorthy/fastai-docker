@@ -1,7 +1,7 @@
 
 This Dockerfile builds GPU images (via Nvidia-docker) for training purpose specifically for fastai course v3
 
-Credit: this Dockerfile was originally published in https://github.com/ThatAIGeek/course-v3
+Credit: this Dockerfile was originally published by https://github.com/ThatAIGeek/course-v3
 
 * Installs software, which is used and/or mentioned in notebooks
 * Install jupyterlab and some handy extensions for better experience. Jupyter notebook should also work but I never tried
