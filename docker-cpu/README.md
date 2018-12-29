@@ -1,4 +1,3 @@
-What this Dockerfile does:
 
 This Dockerfile builds CPU only docker images for inference purpose specifically for fastai course v3
 

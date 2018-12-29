@@ -1,4 +1,3 @@
-What this Dockerfile does:
 
 This Dockerfile builds GPU images (via Nvidia-docker) for training purpose specifically for fastai course v3
 
