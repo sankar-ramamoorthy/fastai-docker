@@ -15,6 +15,8 @@ RUN apt-get update && apt-get install -y \
     vim \
     p7zip-full \
     wget \
+    tmux \
+    htop \
  && rm -rf /var/lib/apt/lists/*
 
 # Create a working directory
@@ -26,7 +28,8 @@ RUN chsh -s /bin/bash
 # Create a non-root user and switch to it
 
 RUN adduser --disabled-password --gecos '' --shell /bin/bash user \
- && chown -R user:user /app
+ && chown -R user:user /app \
+ && adduser user sudo
 
 RUN echo "user ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-user
 USER user
@@ -54,10 +57,32 @@ RUN conda install -y -c pytorch pytorch-cpu torchvision-cpu \
  && conda install -y jupyter \
  && conda clean -ya
 
+
+# configure Jupyter Lab
+RUN conda install -y -c conda-forge jupyterlab
+RUN conda install -y -c conda-forge nodejs
+RUN jupyter labextension install @jupyterlab/toc
+RUN conda install -y -c conda-forge ipywidgets
+RUN pip install jupyterlab_latex
+RUN jupyter labextension install @jupyterlab/latex
+RUN jupyter labextension install jupyterlab-drawio
+RUN jupyter labextension install jupyterlab_bokeh
+
+# Variable inspector for jupyter lab
+RUN git clone https://github.com/lckr/jupyterlab-variableInspector \
+ && cd jupyterlab-variableInspector \
+ && npm install \
+ && npm run build \
+ && jupyter labextension install . \
+ && jupyter labextension list \
+ && cd .. && rm -rf jupyterlab-variableInspector
+
+
 WORKDIR /home/user/
 RUN mkdir .jupyter
 COPY jupyter_notebook_config.py .jupyter/jupyter_notebook_config.py
 
 EXPOSE 8888
-ENTRYPOINT ["jupyter", "notebook","--ip=0.0.0.0","--allow-root"]
+ENTRYPOINT ["jupyter", "lab","--ip=0.0.0.0","--allow-root"]
+
 

@@ -15,6 +15,8 @@ RUN apt-get update && apt-get install -y \
     vim \
     p7zip-full \
     wget \
+    tmux \
+    htop \
  && rm -rf /var/lib/apt/lists/*
 
 # Create a working directory
@@ -26,7 +28,8 @@ RUN chsh -s /bin/bash
 # Create a non-root user and switch to it
 
 RUN adduser --disabled-password --gecos '' --shell /bin/bash user \
- && chown -R user:user /app
+ && chown -R user:user /app \
+ && adduser user sudo
 
 RUN echo "user ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-user
 USER user
@@ -48,7 +51,9 @@ RUN curl -so ~/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-4.5.1
 ENV PATH=/home/user/miniconda/bin:$PATH
 ENV CONDA_AUTO_UPDATE_CONDA=false
 
-RUN conda install -y -c pytorch -c fastai fastai && conda clean -ya
+RUN conda install -y -c pytorch -c fastai fastai \
+ && conda install -y flask \
+ && conda clean -ya
 
 # CUDA 9.2-specific steps
 #RUN conda install -y -c pytorch \
@@ -82,17 +87,17 @@ RUN git clone https://github.com/lckr/jupyterlab-variableInspector \
 
 # Install HDF5 Python bindings
 
-RUN conda install -y h5py \
- && conda clean -ya
-RUN conda install -y -c haasad eidl7zip \
- && conda clean -ya
-RUN pip install h5py-cache
+#RUN conda install -y h5py \
+# && conda clean -ya
+#RUN conda install -y -c haasad eidl7zip \
+# && conda clean -ya
+#RUN pip install h5py-cache
 
 
-RUN pip install kaggle --upgrade \
- && mkdir -p ~/.kaggle/
+#RUN pip install kaggle --upgrade \
+# && mkdir -p ~/.kaggle/
 
-COPY kaggle.json /home/user/.kaggle/kaggle.json
+#COPY kaggle.json /home/user/.kaggle/kaggle.json
 
 WORKDIR /home/user/
 RUN mkdir .jupyter
