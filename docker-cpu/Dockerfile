@@ -54,7 +54,9 @@ ENV CONDA_AUTO_UPDATE_CONDA=false
 RUN conda install -y -c pytorch pytorch-cpu torchvision-cpu \
  && conda install -y -c fastai fastai \
  && conda install -y flask \
- && conda install -y jupyter \
+# && conda install -y jupyter \
+ && conda install -y seaborn \
+ && conda install -y scikit-learn \
  && conda clean -ya
 
 
@@ -77,6 +79,8 @@ RUN git clone https://github.com/lckr/jupyterlab-variableInspector \
  && jupyter labextension list \
  && cd .. && rm -rf jupyterlab-variableInspector
 
+
+COPY .tmux.conf /home/user/
 
 WORKDIR /home/user/
 RUN mkdir .jupyter

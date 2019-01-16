@@ -53,6 +53,8 @@ ENV CONDA_AUTO_UPDATE_CONDA=false
 
 RUN conda install -y -c pytorch -c fastai fastai \
  && conda install -y flask \
+ && conda install -y seaborn \
+ && conda install -y scikit-learn \
  && conda clean -ya
 
 # CUDA 9.2-specific steps
@@ -98,6 +100,8 @@ RUN git clone https://github.com/lckr/jupyterlab-variableInspector \
 # && mkdir -p ~/.kaggle/
 
 #COPY kaggle.json /home/user/.kaggle/kaggle.json
+
+COPY .tmux.conf /home/user/
 
 WORKDIR /home/user/
 RUN mkdir .jupyter
