@@ -3,11 +3,7 @@ RUN mkdir /home/user/shared -p
 WORKDIR /home/user/shared
 
 #add additional artifacts
-COPY   ./files/ComputerVision ./ComputerVision
-COPY   ./files/course-v3 ./course-v3
-COPY   ./files/data  ./data
-COPY   ./files/.fastai  ./.fastai
-COPY   ./files/.torch ./.torch
+COPY ./files/  /home/user/shared/
 
 RUN chmod 777 -R /home/user/shared
 

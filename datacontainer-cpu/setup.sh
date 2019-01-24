@@ -10,6 +10,7 @@ cp -r /home/chihchungwang/Documents/git/github/chwang733/fastai-v3-examples/Comp
 cp -r /home/chihchungwang/Documents/git/course-v3/  files/
 cp -r /home/chihchungwang/.fastai/  files/
 cp -r /home/chihchungwang/.torch/  files/
+cp ./createSimLink.sh  files/
 
 echo "docker build..............."
-docker build -t fastai_v1:dc .
+docker build -t chwang733/fastai_v1:dc .

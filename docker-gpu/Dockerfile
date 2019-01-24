@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
     vim \
     p7zip-full \
     wget \
+    default-jdk \
     tmux \
     htop \
  && rm -rf /var/lib/apt/lists/*
@@ -84,8 +85,12 @@ RUN git clone https://github.com/lckr/jupyterlab-variableInspector \
  && npm run build \
  && jupyter labextension install . \
  && jupyter labextension list \
- && cd .. && rm -rf jupyterlab-variableInspector
-
+ && cd .. && rm -rf jupyterlab-variableInspector \
+ && mkdir java-kernel && cd java-kernel \
+ && wget https://github.com/SpencerPark/IJava/releases/download/v1.2.0/ijava-1.2.0.zip \
+ && unzip ijava-1.2.0.zip \
+ && python3 install.py --sys-prefix \
+ && cd ..  && rm -rf java-kernel
 
 # Install HDF5 Python bindings
 
